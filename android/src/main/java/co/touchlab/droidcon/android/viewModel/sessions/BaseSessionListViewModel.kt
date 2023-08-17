@@ -6,7 +6,6 @@ import co.touchlab.droidcon.domain.gateway.SessionGateway
 import co.touchlab.droidcon.domain.service.DateTimeService
 import co.touchlab.droidcon.domain.service.toConferenceDateTime
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject

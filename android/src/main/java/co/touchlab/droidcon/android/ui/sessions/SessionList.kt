@@ -39,7 +39,6 @@ import co.touchlab.droidcon.android.ui.theme.Dimensions
 import co.touchlab.droidcon.android.ui.theme.Toolbar
 import co.touchlab.droidcon.android.viewModel.sessions.BaseSessionListViewModel
 import co.touchlab.droidcon.ui.theme.Colors
-import com.google.firebase.ktx.Firebase
 
 @Composable
 fun SessionList(navController: NavHostController, sessions: BaseSessionListViewModel, @StringRes emptyRes: Int) {

@@ -1,7 +1,6 @@
 package co.touchlab.droidcon.ui.session
 
 import android.annotation.SuppressLint
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -36,7 +35,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import co.touchlab.droidcon.composite.Url
 import co.touchlab.droidcon.dto.WebLink
-import co.touchlab.droidcon.sharedui.R
 import co.touchlab.droidcon.ui.icons.ArrowBack
 import co.touchlab.droidcon.ui.icons.Description
 import co.touchlab.droidcon.ui.icons.Language

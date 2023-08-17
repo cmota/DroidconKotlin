@@ -21,7 +21,6 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import co.touchlab.droidcon.R
-import co.touchlab.droidcon.application.service.NotificationSchedulingService
 import co.touchlab.droidcon.application.service.NotificationService
 import co.touchlab.droidcon.domain.service.AnalyticsService
 import co.touchlab.droidcon.domain.service.SyncService
