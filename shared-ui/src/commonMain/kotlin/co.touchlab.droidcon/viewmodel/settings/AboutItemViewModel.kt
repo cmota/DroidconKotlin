@@ -7,5 +7,5 @@ class AboutItemViewModel(
     val title: String,
     val detail: String,
     val webLinks: List<WebLink>,
-    val icon: String,
+    val icon: String
 ) : BaseViewModel()

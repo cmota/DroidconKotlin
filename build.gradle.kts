@@ -1,9 +1,11 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    id("android-gradle") apply false
-    id("com.google.firebase.crashlytics") apply false
-    kotlin("multiplatform") apply false
-    id("org.jlleitschuh.gradle.ktlint")
+    alias(libs.plugins.androidApplication) apply false
+    alias(libs.plugins.kotlinAndroid) apply false
+
+    id("com.google.gms.google-services") version "4.3.15" apply false
+    id("com.squareup.sqldelight") version (libs.versions.sqldelight.get()) apply false
 }
 
 allprojects {
@@ -12,25 +14,6 @@ allprojects {
         mavenCentral()
         maven(url = "https://oss.sonatype.org/content/repositories/snapshots/")
         maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
-    }
-}
-
-subprojects {
-    apply(plugin = "org.jlleitschuh.gradle.ktlint")
-
-    ktlint {
-        version.set("0.37.2")
-        enableExperimentalRules.set(true)
-        verbose.set(true)
-        filter {
-            exclude { it.file.path.contains("build/") }
-        }
-    }
-
-    afterEvaluate {
-        tasks.named("check") {
-            dependsOn(tasks.getByName("ktlintCheck"))
-        }
     }
 }
 

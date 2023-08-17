@@ -37,12 +37,12 @@ import co.touchlab.droidcon.ui.icons.Description
 import co.touchlab.droidcon.ui.icons.Person
 import co.touchlab.droidcon.ui.session.SpeakerDetailView
 import co.touchlab.droidcon.ui.theme.Dimensions
-import co.touchlab.droidcon.ui.util.RemoteImage
 import co.touchlab.droidcon.ui.util.observeAsState
 import co.touchlab.droidcon.util.NavigationController
 import co.touchlab.droidcon.util.NavigationStack
 import co.touchlab.droidcon.viewmodel.session.SpeakerListItemViewModel
 import co.touchlab.droidcon.viewmodel.sponsor.SponsorDetailViewModel
+import com.seiko.imageloader.rememberImagePainter
 
 @Composable
 internal fun SponsorDetailView(viewModel: SponsorDetailViewModel) {
@@ -127,8 +127,8 @@ private fun HeaderView(name: String, groupTitle: String, imageUrl: Url?) {
         }
 
         if (imageUrl != null) {
-            RemoteImage(
-                imageUrl = imageUrl.string,
+            Image(
+                painter = rememberImagePainter(url = imageUrl.string),
                 modifier = Modifier
                     .width(120.dp)
                     .padding(horizontal = Dimensions.Padding.default)
@@ -194,8 +194,8 @@ private fun RepresentativeInfoView(profile: SpeakerListItemViewModel) {
                         .background(MaterialTheme.colors.primary),
                 )
             } else {
-                RemoteImage(
-                    imageUrl = imageUrl.string,
+                Image(
+                    painter = rememberImagePainter(url = imageUrl.string),
                     contentDescription = profile.info,
                     modifier = Modifier
                         .width(80.dp)

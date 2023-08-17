@@ -4,6 +4,7 @@ import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.togetherWith
 import androidx.compose.animation.with
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -115,25 +116,25 @@ class NavigationController : BaseViewModel() {
     }
 
     @Composable
-    internal fun PushedStack(itemModifier: Modifier = Modifier) {
+    internal fun PushedStack(modifier: Modifier = Modifier) {
         val currentStack by observeStack.observeAsState()
 
         var i = 0
         while (i < currentStack.count()) {
             when (val item = currentStack[i++]) {
                 is NavigationStackItem.BackPressHandler -> continue
-                is NavigationStackItem.Push<*> -> PushedStackItem(item, itemModifier)
+                is NavigationStackItem.Push<*> -> PushedStackItem(item, modifier)
             }
         }
     }
 
     @Composable
-    private fun <T : Any> PushedStackItem(item: NavigationStackItem.Push<T>, itemModifier: Modifier) {
+    private fun <T : Any> PushedStackItem(item: NavigationStackItem.Push<T>, modifier: Modifier) {
         println("$item")
         val itemValue by item.item.observeAsState()
 
         itemValue?.let {
-            Surface(modifier = itemModifier) {
+            Surface(modifier = modifier) {
                 item.content(it)
             }
         }
@@ -268,12 +269,12 @@ internal fun NavigationStack(key: Any?, links: NavigationStackScope.() -> Unit, 
         targetState = activeLinkComposables,
         transitionSpec = {
             if (initialState.indexOfLast { it.body != null } < targetState.indexOfLast { it.body != null }) {
-                slideInHorizontally(initialOffsetX = { it }) with slideOutHorizontally(targetOffsetX = { -it })
+                slideInHorizontally(initialOffsetX = { it }) togetherWith slideOutHorizontally(targetOffsetX = { -it })
             } else {
-                slideInHorizontally(initialOffsetX = { -it }) with slideOutHorizontally(targetOffsetX = { it })
+                slideInHorizontally(initialOffsetX = { -it }) togetherWith slideOutHorizontally(targetOffsetX = { it })
             }
         },
-        contentAlignment = Alignment.BottomCenter
+        contentAlignment = Alignment.BottomCenter, label = ""
     ) { activeComposables ->
         SubcomposeLayout(
             measurePolicy = { constraints ->

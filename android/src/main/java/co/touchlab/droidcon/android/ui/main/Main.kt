@@ -3,6 +3,7 @@ package co.touchlab.droidcon.android.ui.main
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -21,7 +22,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import co.touchlab.droidcon.R
 import co.touchlab.droidcon.android.ui.ProfileDetail
@@ -36,9 +40,6 @@ import co.touchlab.droidcon.android.viewModel.MainViewModel
 import co.touchlab.droidcon.domain.entity.Profile
 import co.touchlab.droidcon.domain.entity.Session
 import co.touchlab.droidcon.domain.entity.Sponsor
-import com.google.accompanist.navigation.animation.AnimatedNavHost
-import com.google.accompanist.navigation.animation.composable
-import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 
 sealed class MainTab(val route: String, @StringRes val titleRes: Int, @DrawableRes val image: Int) {
     object Schedule : MainTab("schedule", R.string.schedule_title, R.drawable.menu_schedule)
@@ -88,7 +89,7 @@ fun Main(main: MainViewModel) {
         Feedback(it)
     }
 
-    val navController = rememberAnimatedNavController()
+    val navController = rememberNavController()
     Scaffold(
         modifier = Modifier.systemBarsPadding(),
         bottomBar = {
@@ -117,22 +118,22 @@ fun Main(main: MainViewModel) {
             }
         }
     ) { innerPadding ->
-        AnimatedNavHost(navController, startDestination = MainTab.Schedule.route, Modifier.padding(innerPadding)) {
+        NavHost(navController, startDestination = MainTab.Schedule.route, Modifier.padding(innerPadding)) {
             navigation(ScheduleScreen.Main.route, MainTab.Schedule.route) {
                 composable(ScheduleScreen.Main.route) { Schedule(navController) }
                 composable(
                     route = ScheduleScreen.SessionDetail.route,
                     enterTransition = {
                         if (initialState.destination.route == ScheduleScreen.Main.route) {
-                            slideIntoContainer(AnimatedContentScope.SlideDirection.Left)
+                            slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Companion.Left)
                         } else {
                             fadeIn()
                         }
                     },
-                    popEnterTransition = { slideIntoContainer(AnimatedContentScope.SlideDirection.Up) },
+                    popEnterTransition = { slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Companion.Up) },
                     exitTransition = {
                         if (targetState.destination.route == ScheduleScreen.Main.route) {
-                            slideOutOfContainer(AnimatedContentScope.SlideDirection.Right)
+                            slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Companion.Right)
                         } else {
                             fadeOut()
                         }
@@ -146,14 +147,14 @@ fun Main(main: MainViewModel) {
                     route = ScheduleScreen.SpeakerDetail.route,
                     enterTransition = {
                         if (initialState.destination.route == ScheduleScreen.SessionDetail.route) {
-                            slideIntoContainer(AnimatedContentScope.SlideDirection.Left)
+                            slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Companion.Left)
                         } else {
                             fadeIn()
                         }
                     },
                     exitTransition = {
                         if (targetState.destination.route == ScheduleScreen.SessionDetail.route) {
-                            slideOutOfContainer(AnimatedContentScope.SlideDirection.Right)
+                            slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Companion.Right)
                         } else {
                             fadeOut()
                         }
@@ -173,14 +174,14 @@ fun Main(main: MainViewModel) {
                     route = SponsorsScreen.Detail.route,
                     enterTransition = {
                         if (initialState.destination.route == SponsorsScreen.Main.route) {
-                            slideIntoContainer(AnimatedContentScope.SlideDirection.Left)
+                            slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Companion.Left)
                         } else {
                             fadeIn()
                         }
                     },
                     exitTransition = {
                         if (targetState.destination.route == SponsorsScreen.Main.route) {
-                            slideOutOfContainer(AnimatedContentScope.SlideDirection.Right)
+                            slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Companion.Right)
                         } else {
                             fadeOut()
                         }
@@ -199,14 +200,14 @@ fun Main(main: MainViewModel) {
                     route = SponsorsScreen.RepresentativeDetail.route,
                     enterTransition = {
                         if (initialState.destination.route == SponsorsScreen.Detail.route) {
-                            slideIntoContainer(AnimatedContentScope.SlideDirection.Left)
+                            slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Companion.Left)
                         } else {
                             fadeIn()
                         }
                     },
                     exitTransition = {
                         if (targetState.destination.route == SponsorsScreen.Detail.route) {
-                            slideOutOfContainer(AnimatedContentScope.SlideDirection.Right)
+                            slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Companion.Right)
                         } else {
                             fadeOut()
                         }

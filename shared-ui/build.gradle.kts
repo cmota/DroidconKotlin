@@ -2,19 +2,19 @@ plugins {
     kotlin("multiplatform")
     kotlin("plugin.serialization")
     id("com.android.library")
-    id("org.jetbrains.compose")
+    id("org.jetbrains.compose") version "1.5.0-beta02"
 }
 
 android {
-    val androidMinSdk: String by project
-    val androidCompileSdk: String by project
-    val androidTargetSdk: String by project
-
-    compileSdk = androidCompileSdk.toInt()
+    compileSdkPreview = libs.versions.androidCompileSdk.get()
     defaultConfig {
-        minSdk = androidMinSdk.toInt()
-        targetSdk = androidTargetSdk.toInt()
+        minSdk = libs.versions.androidMinSdk.get().toInt()
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     lint {
@@ -29,39 +29,20 @@ android {
         main.resources.setSrcDirs(
             listOf(
                 "src/androidMain/resources",
-                "src/commonMain/resources",
+                "src/commonMain/resources"
             )
         )
         main.manifest.srcFile("src/androidMain/AndroidManifest.xml")
     }
+
+    namespace = "co.touchlab.droidcon.sharedui"
 }
 
 version = "1.0"
 
-android {
-    configurations {
-        create("androidTestApi")
-        create("androidTestDebugApi")
-        create("androidTestReleaseApi")
-        create("testApi")
-        create("testDebugApi")
-        create("testReleaseApi")
-    }
-}
-
-compose {
-    /*android {
-        useAndroidX = true
-        androidxVersion = "1.3.0"
-    }*/
-}
 
 kotlin {
-    android()
-    ios()
-    iosSimulatorArm64()
-
-    version = "1.0"
+    androidTarget()
 
     sourceSets {
         val commonMain by getting {
@@ -69,77 +50,32 @@ kotlin {
                 implementation(project(":shared"))
 
                 api(libs.kermit)
-                api(libs.kermit.crashlytics)
                 api(libs.kotlinx.coroutines.core)
                 api(libs.kotlinx.datetime)
                 api(libs.multiplatformSettings.core)
-                // this enforces new version of atomicfu, the older version from other libraries crashes iOS build
                 api(libs.atomicFu)
                 api(libs.uuid)
 
-                implementation(libs.bundles.ktor.common)
-                implementation(libs.bundles.sqldelight.common)
+                implementation(libs.ktor.client.core)
+                implementation(libs.ktor.client.json)
+                implementation(libs.ktor.client.logging)
+                implementation(libs.ktor.client.serialization)
+
+                implementation(libs.sqldelight.runtime)
+                implementation(libs.sqldelight.coroutines)
 
                 implementation(libs.stately.common)
                 implementation(libs.koin.core)
 
-                implementation(compose.ui)
                 implementation(compose.foundation)
-                implementation(compose.material)
                 implementation(compose.runtime)
+                implementation(compose.material)
+                implementation(compose.ui)
+
+                implementation(libs.imageLoader)
 
                 implementation(libs.hyperdrive.multiplatformx.api)
-                // implementation(libs.hyperdrive.multiplatformx.compose)
             }
-        }
-        val commonTest by getting {
-            dependencies {
-                implementation(libs.multiplatformSettings.test)
-                implementation(libs.kotlin.test.common)
-                implementation(libs.koin.test)
-            }
-        }
-        val androidMain by getting {
-            dependencies {
-                implementation(libs.accompanist.coil)
-            }
-        }
-        val androidTest by getting {
-            dependencies {
-                implementation(libs.test.junit)
-                implementation(libs.test.junitKtx)
-                implementation(libs.test.coroutines)
-            }
-        }
-        val iosMain by getting {
-            dependencies {
-                implementation(libs.imageLoader)
-            }
-        }
-        val iosTest by getting {}
-
-        sourceSets["iosSimulatorArm64Main"].dependsOn(iosMain)
-        sourceSets["iosSimulatorArm64Test"].dependsOn(iosTest)
-    }
-
-    sourceSets.all {
-        languageSettings.apply {
-            optIn("kotlin.RequiresOptIn")
-            optIn("kotlinx.coroutines.ExperimentalCoroutinesApi")
-        }
-    }
-
-    sourceSets.matching { it.name.endsWith("Test") }.configureEach {
-        languageSettings.optIn("kotlin.time.ExperimentalTime")
-    }
-
-    // Enable concurrent sweep phase in new native memory manager. (This will be enabled by default in 1.7.0)
-    // https://kotlinlang.org/docs/whatsnew1620.html#concurrent-implementation-for-the-sweep-phase-in-new-memory-manager
-    // (This might not be necessary here since the other module creates the framework, but it's here as well just in case it matters for
-    //  test binaries)
-    targets.withType<org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget> {
-        binaries.all {
-            freeCompilerArgs += "-Xgc=cms"
         }
     }
 }

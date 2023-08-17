@@ -50,10 +50,8 @@ import co.touchlab.droidcon.android.ui.theme.Toolbar
 import co.touchlab.droidcon.android.viewModel.sponsors.SponsorGroupViewModel
 import co.touchlab.droidcon.android.viewModel.sponsors.SponsorListViewModel
 import co.touchlab.droidcon.ui.theme.Colors
-import coil.annotation.ExperimentalCoilApi
-import coil.compose.ImagePainter
-import coil.compose.LocalImageLoader
-import coil.compose.rememberImagePainter
+import com.seiko.imageloader.LocalImageLoader
+import com.seiko.imageloader.rememberImagePainter
 import kotlin.math.min
 
 @Composable
@@ -86,7 +84,6 @@ fun SponsorList(navController: NavHostController) {
     }
 }
 
-@OptIn(ExperimentalCoilApi::class)
 @Composable
 private fun SponsorGroup(sponsorGroup: SponsorGroupViewModel, navController: NavHostController) {
     val uriHandler = LocalUriHandler.current
@@ -120,11 +117,8 @@ private fun SponsorGroup(sponsorGroup: SponsorGroupViewModel, navController: Nav
                     sponsors.subList(startIndex, endIndex).forEach { sponsor ->
 
                         val resource = rememberImagePainter(
-                            data = sponsor.imageUrl.string,
+                            url = sponsor.imageUrl.string,
                             imageLoader = LocalImageLoader.current,
-                            builder = {
-                                placeholder(0)
-                            }
                         )
 
                         Box(
@@ -143,15 +137,14 @@ private fun SponsorGroup(sponsorGroup: SponsorGroupViewModel, navController: Nav
                                 },
                             contentAlignment = Alignment.Center
                         ) {
-                            if (resource.state !is ImagePainter.State.Success) {
-                                Text(
-                                    text = sponsor.name,
-                                    modifier = Modifier.padding(Dimensions.Padding.half),
-                                    textAlign = TextAlign.Center,
-                                    overflow = TextOverflow.Ellipsis,
-                                    maxLines = 3
-                                )
-                            }
+                            Text(
+                                text = sponsor.name,
+                                modifier = Modifier.padding(Dimensions.Padding.half),
+                                textAlign = TextAlign.Center,
+                                overflow = TextOverflow.Ellipsis,
+                                maxLines = 3
+                            )
+
                             Image(
                                 painter = resource,
                                 contentDescription = sponsor.name

@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -36,12 +35,11 @@ import co.touchlab.kermit.Logger
 import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.delay
 import org.brightify.hyperdrive.multiplatformx.LifecycleGraph
+import org.koin.android.ext.android.inject
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
 class MainActivity : ComponentActivity(), KoinComponent {
 
-    private val notificationSchedulingService: NotificationSchedulingService by inject()
     private val syncService: SyncService by inject()
     private val analyticsService: AnalyticsService by inject()
 

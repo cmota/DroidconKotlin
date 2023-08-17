@@ -41,9 +41,8 @@ import co.touchlab.droidcon.android.viewModel.sponsors.SponsorDetailViewModel
 import co.touchlab.droidcon.composite.Url
 import co.touchlab.droidcon.domain.entity.Sponsor
 import co.touchlab.droidcon.ui.theme.Colors
-import coil.annotation.ExperimentalCoilApi
-import coil.compose.LocalImageLoader
-import coil.compose.rememberImagePainter
+import com.seiko.imageloader.LocalImageLoader
+import com.seiko.imageloader.rememberImagePainter
 
 @Composable
 fun SponsorDetail(navController: NavHostController, sponsorId: Sponsor.Id) {
@@ -83,7 +82,6 @@ fun SponsorDetail(navController: NavHostController, sponsorId: Sponsor.Id) {
     }
 }
 
-@OptIn(ExperimentalCoilApi::class)
 @Composable
 private fun Header(name: String, groupTitle: String, imageUrl: Url?) {
     Row(
@@ -119,11 +117,8 @@ private fun Header(name: String, groupTitle: String, imageUrl: Url?) {
 
         val painter = imageUrl?.string?.let {
             rememberImagePainter(
-                data = it,
-                imageLoader = LocalImageLoader.current,
-                builder = {
-                    placeholder(0)
-                }
+                url = it,
+                imageLoader = LocalImageLoader.current
             )
         }
 
@@ -161,7 +156,6 @@ private fun Description(description: String) {
     }
 }
 
-@OptIn(ExperimentalCoilApi::class)
 @Composable
 private fun RepresentativeInfo(profile: ProfileViewModel, representativeTapped: () -> Unit) {
     Column(
@@ -172,11 +166,8 @@ private fun RepresentativeInfo(profile: ProfileViewModel, representativeTapped: 
         Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
             val painter = profile.imageUrl?.string?.let {
                 rememberImagePainter(
-                    data = it,
+                    url = it,
                     imageLoader = LocalImageLoader.current,
-                    builder = {
-                        placeholder(0)
-                    }
                 )
             }
 

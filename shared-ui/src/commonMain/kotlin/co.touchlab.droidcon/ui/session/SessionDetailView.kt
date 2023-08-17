@@ -1,5 +1,6 @@
 package co.touchlab.droidcon.ui.session
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -47,13 +48,13 @@ import co.touchlab.droidcon.ui.icons.Check
 import co.touchlab.droidcon.ui.icons.Description
 import co.touchlab.droidcon.ui.icons.Info
 import co.touchlab.droidcon.ui.theme.Dimensions
-import co.touchlab.droidcon.ui.util.RemoteImage
 import co.touchlab.droidcon.ui.util.WebLinkText
 import co.touchlab.droidcon.ui.util.observeAsState
 import co.touchlab.droidcon.util.NavigationController
 import co.touchlab.droidcon.util.NavigationStack
 import co.touchlab.droidcon.viewmodel.session.SessionDetailViewModel
 import co.touchlab.droidcon.viewmodel.session.SpeakerListItemViewModel
+import com.seiko.imageloader.rememberImagePainter
 
 @Composable
 internal fun SessionDetailView(viewModel: SessionDetailViewModel) {
@@ -89,7 +90,10 @@ internal fun SessionDetailView(viewModel: SessionDetailViewModel) {
                 viewModel.scrollState = scrollState.value
             }
 
-            Column(modifier = Modifier.verticalScroll(scrollState)) {
+            Column(modifier = Modifier
+                .padding(it)
+                .verticalScroll(scrollState)
+            ) {
                 val state by viewModel.observeState.observeAsState()
                 Box(contentAlignment = Alignment.BottomStart) {
                     Column(modifier = Modifier.padding(bottom = 22.dp)) {
@@ -264,8 +268,8 @@ private fun SpeakerView(speaker: SpeakerListItemViewModel) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             val imageUrl = speaker.avatarUrl?.string
             if (imageUrl != null) {
-                RemoteImage(
-                    imageUrl = imageUrl,
+                Image(
+                    painter = rememberImagePainter(url = imageUrl),
                     contentDescription = speaker.info,
                     modifier = Modifier.width(80.dp)
                         .padding(start = Dimensions.Padding.default, end = Dimensions.Padding.default, top = Dimensions.Padding.half)

@@ -39,7 +39,6 @@ import co.touchlab.droidcon.android.ui.theme.Dimensions
 import co.touchlab.droidcon.android.ui.theme.Toolbar
 import co.touchlab.droidcon.android.viewModel.sessions.BaseSessionListViewModel
 import co.touchlab.droidcon.ui.theme.Colors
-import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.ktx.Firebase
 
 @Composable
@@ -67,7 +66,6 @@ fun SessionList(navController: NavHostController, sessions: BaseSessionListViewM
                                 Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex])
                             )
                         } else {
-                            Firebase.crashlytics.recordException(IllegalStateException("SessionList TabRow requested an indicator for selectedTabIndex: $selectedTabIndex, but only got ${tabPositions.count()} tabs."))
                             TabRowDefaults.Indicator()
                         }
                     }

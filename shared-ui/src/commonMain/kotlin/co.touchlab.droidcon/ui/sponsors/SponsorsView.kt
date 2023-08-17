@@ -1,6 +1,7 @@
 package co.touchlab.droidcon.ui.sponsors
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -38,11 +39,11 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import co.touchlab.droidcon.ui.icons.DateRange
 import co.touchlab.droidcon.ui.theme.Dimensions
-import co.touchlab.droidcon.ui.util.RemoteImage
 import co.touchlab.droidcon.ui.util.observeAsState
 import co.touchlab.droidcon.util.NavigationStack
 import co.touchlab.droidcon.viewmodel.sponsor.SponsorGroupViewModel
 import co.touchlab.droidcon.viewmodel.sponsor.SponsorListViewModel
+import com.seiko.imageloader.rememberImagePainter
 import kotlin.math.min
 
 @Composable
@@ -132,8 +133,8 @@ private fun SponsorGroupView(sponsorGroup: SponsorGroupViewModel) {
                         ) {
                             val imageUrl = sponsor.validImageUrl
                             if (imageUrl != null) {
-                                RemoteImage(
-                                    imageUrl = imageUrl,
+                                Image(
+                                    painter = rememberImagePainter(url = imageUrl),
                                     contentDescription = sponsor.name,
                                 )
                             } else {

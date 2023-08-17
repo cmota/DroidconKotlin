@@ -1,5 +1,8 @@
 package co.touchlab.droidcon.ui.session
 
+import android.annotation.SuppressLint
+import androidx.annotation.DrawableRes
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
@@ -27,19 +30,21 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import co.touchlab.droidcon.composite.Url
 import co.touchlab.droidcon.dto.WebLink
+import co.touchlab.droidcon.sharedui.R
 import co.touchlab.droidcon.ui.icons.ArrowBack
 import co.touchlab.droidcon.ui.icons.Description
 import co.touchlab.droidcon.ui.icons.Language
 import co.touchlab.droidcon.ui.theme.Dimensions
-import co.touchlab.droidcon.ui.util.LocalImage
-import co.touchlab.droidcon.ui.util.RemoteImage
 import co.touchlab.droidcon.ui.util.WebLinkText
 import co.touchlab.droidcon.util.NavigationController
 import co.touchlab.droidcon.viewmodel.session.SpeakerDetailViewModel
+import com.seiko.imageloader.rememberImagePainter
 
 @Composable
 internal fun SpeakerDetailView(viewModel: SpeakerDetailViewModel) {
@@ -63,7 +68,9 @@ internal fun SpeakerDetailView(viewModel: SpeakerDetailViewModel) {
     ) {
         val scrollState = rememberScrollState()
         Column(
-            modifier = Modifier.verticalScroll(scrollState),
+            modifier = Modifier
+                .padding(it)
+                .verticalScroll(scrollState),
         ) {
             HeaderView(viewModel.name, viewModel.position ?: "", viewModel.avatarUrl)
 
@@ -98,8 +105,8 @@ private fun HeaderView(name: String, tagLine: String, imageUrl: Url?) {
             verticalAlignment = Alignment.CenterVertically,
         ) {
             if (imageUrl != null) {
-                RemoteImage(
-                    imageUrl = imageUrl.string,
+                Image(
+                    painter = rememberImagePainter(url = imageUrl.string),
                     contentDescription = name,
                     modifier = Modifier
                         .width(100.dp)
@@ -134,15 +141,20 @@ private fun HeaderView(name: String, tagLine: String, imageUrl: Url?) {
     }
 }
 
+@SuppressLint("DiscouragedApi")
 @Composable
-private fun SocialView(url: WebLink, iconName: String) {
+private fun SocialView(url: WebLink, icon: String) {
     Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-        LocalImage(
-            imageResourceName = iconName,
-            modifier = Modifier
-                .padding(Dimensions.Padding.default)
-                .size(28.dp),
-        )
+        val context = LocalContext.current
+        context.resources.getIdentifier(icon, "drawable", context.packageName).takeIf { it != 0 }?.let {
+            Image(
+                painter = painterResource(id = it),
+                modifier = Modifier
+                    .padding(Dimensions.Padding.default)
+                    .size(28.dp),
+                contentDescription = url.link
+            )
+        }
         WebLinkText(
             text = url.link,
             links = listOf(url),

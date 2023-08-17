@@ -1,81 +1,49 @@
 import java.util.Properties
 
 plugins {
-    id("com.android.application")
-    kotlin("android")
+    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.kotlinAndroid)
+
     id("com.google.gms.google-services")
-    id("com.google.firebase.crashlytics")
 }
-val releaseEnabled = file("./release.jks").exists()
-
-val properties = Properties()
-try {
-
-    properties.load(project.rootProject.file("local.properties").bufferedReader())
-} catch (e: Exception) {
-}
-
-val releasePassword = properties.getProperty("releasePassword", "")
 
 android {
-    val androidMinSdk: String by project
-    val androidCompileSdk: String by project
-    val androidTargetSdk: String by project
+    compileSdkPreview = libs.versions.androidCompileSdk.get()
 
-    compileSdk = androidCompileSdk.toInt()
     defaultConfig {
-        applicationId = "co.touchlab.droidconsf2018"
-        minSdk = androidMinSdk.toInt()
-        targetSdk = androidTargetSdk.toInt()
+        applicationId = "co.touchlab.droidcon"
+        minSdk = libs.versions.androidMinSdk.get().toInt()
+        targetSdk = 34
         versionCode = 20100
         versionName = "2.1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
-    packagingOptions {
+
+    packaging {
         resources.excludes.add("META-INF/*.kotlin_module")
     }
-    if (releaseEnabled) {
-        signingConfigs {
-            create("release") {
-                keyAlias = "key0"
-                keyPassword = releasePassword
-                storeFile = file("./release.jks")
-                storePassword = releasePassword
-            }
-        }
-    }
-    buildTypes {
-        if (releaseEnabled) {
-            getByName("release") {
-                isMinifyEnabled = false
-                proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-                signingConfig = signingConfigs.getByName("release")
-            }
-        }
-    }
+
     compileOptions {
         // Flag to enable support for the new language APIs
         isCoreLibraryDesugaringEnabled = true
 
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
-    lint {
-        warningsAsErrors = true
-        abortOnError = true
+    kotlinOptions {
+        jvmTarget = "17"
     }
 
     buildFeatures {
         compose = true
     }
+
     composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
+        kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
     }
 
-    packagingOptions {
-        resources.excludes.add("META-INF/*.kotlin_module")
-    }
+    namespace = "co.touchlab.droidcon"
 }
 
 dependencies {
@@ -83,17 +51,19 @@ dependencies {
     implementation(project(":shared-ui"))
 
     implementation(libs.androidx.core.splashscreen)
-    implementation(libs.koin.core)
-    implementation(libs.koin.android)
+    implementation(libs.koin.compose)
     implementation(libs.kotlinx.datetime)
-    implementation(libs.accompanist.coil)
-    implementation(libs.accompanist.navigationAnimation)
     implementation(libs.firebase.analytics)
-    implementation(libs.firebase.crashlytics)
 
     implementation(libs.hyperdrive.multiplatformx.api)
 
-    implementation(libs.bundles.androidx.compose)
+    implementation(libs.imageLoader)
+
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.foundation)
+    implementation(libs.androidx.compose.material)
+    implementation(libs.androidx.compose.activity)
+    implementation(libs.androidx.compose.navigation)
 
     coreLibraryDesugaring(libs.android.desugar)
 }

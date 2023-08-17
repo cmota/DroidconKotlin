@@ -50,9 +50,8 @@ import co.touchlab.droidcon.android.viewModel.sessions.SessionDetailViewModel
 import co.touchlab.droidcon.domain.entity.Session
 import co.touchlab.droidcon.dto.WebLink
 import co.touchlab.droidcon.ui.theme.Colors
-import coil.annotation.ExperimentalCoilApi
-import coil.compose.LocalImageLoader
-import coil.compose.rememberImagePainter
+import com.seiko.imageloader.LocalImageLoader
+import com.seiko.imageloader.rememberImagePainter
 
 @Composable
 fun SessionDetail(navController: NavHostController, sessionId: Session.Id) {
@@ -225,7 +224,6 @@ private fun Description(description: String, links: List<WebLink>) {
     }
 }
 
-@OptIn(ExperimentalCoilApi::class)
 @Composable
 private fun Speaker(speaker: ProfileViewModel, speakerTapped: () -> Unit) {
     Column(
@@ -236,11 +234,8 @@ private fun Speaker(speaker: ProfileViewModel, speakerTapped: () -> Unit) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             val painter = speaker.imageUrl?.string?.let {
                 rememberImagePainter(
-                    data = it,
-                    imageLoader = LocalImageLoader.current,
-                    builder = {
-                        placeholder(0)
-                    }
+                    url = it,
+                    imageLoader = LocalImageLoader.current
                 )
             }
 

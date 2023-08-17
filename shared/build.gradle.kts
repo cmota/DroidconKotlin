@@ -6,15 +6,16 @@ plugins {
 }
 
 android {
-    val androidMinSdk: String by project
-    val androidCompileSdk: String by project
-    val androidTargetSdk: String by project
+    compileSdkPreview = libs.versions.androidCompileSdk.get()
 
-    compileSdk = androidCompileSdk.toInt()
     defaultConfig {
-        minSdk = androidMinSdk.toInt()
-        targetSdk = androidTargetSdk.toInt()
+        minSdk = libs.versions.androidMinSdk.get().toInt()
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     lint {
@@ -34,51 +35,35 @@ android {
         )
         main.manifest.srcFile("src/androidMain/AndroidManifest.xml")
     }
+
+    namespace = "co.touchlab.droidcon.shared"
 }
 
 version = "1.0"
 
-android {
-    configurations {
-        create("androidTestApi")
-        create("androidTestDebugApi")
-        create("androidTestReleaseApi")
-        create("testApi")
-        create("testDebugApi")
-        create("testReleaseApi")
-    }
-}
-
 kotlin {
-    android()
-    ios()
-    iosSimulatorArm64()
-
-    version = "1.0"
+    androidTarget()
 
     sourceSets {
         val commonMain by getting {
             dependencies {
                 api(libs.kermit)
-                api(libs.kermit.crashlytics)
                 api(libs.kotlinx.coroutines.core)
                 api(libs.kotlinx.datetime)
                 api(libs.multiplatformSettings.core)
                 api(libs.uuid)
 
-                implementation(libs.bundles.ktor.common)
-                implementation(libs.bundles.sqldelight.common)
+                implementation(libs.ktor.client.core)
+                implementation(libs.ktor.client.json)
+                implementation(libs.ktor.client.logging)
+                implementation(libs.ktor.client.serialization)
+
+                implementation(libs.sqldelight.runtime)
+                implementation(libs.sqldelight.coroutines)
 
                 implementation(libs.stately.common)
                 implementation(libs.koin.core)
                 implementation(libs.korio)
-            }
-        }
-        val commonTest by getting {
-            dependencies {
-                implementation(libs.multiplatformSettings.test)
-                implementation(libs.kotlin.test.common)
-                implementation(libs.koin.test)
             }
         }
         val androidMain by getting {
@@ -88,44 +73,6 @@ kotlin {
                 implementation(libs.ktor.client.okhttp)
                 implementation(libs.androidx.core)
             }
-        }
-        val androidTest by getting {
-            dependencies {
-                implementation(libs.test.junit)
-                implementation(libs.test.junitKtx)
-                implementation(libs.test.coroutines)
-            }
-        }
-        val iosMain by getting {
-            dependencies {
-                implementation(libs.sqldelight.driver.ios)
-                implementation(libs.ktor.client.ios)
-            }
-        }
-        val iosTest by getting {}
-
-        sourceSets["iosSimulatorArm64Main"].dependsOn(iosMain)
-        sourceSets["iosSimulatorArm64Test"].dependsOn(iosTest)
-    }
-
-    sourceSets.all {
-        languageSettings.apply {
-            optIn("kotlin.RequiresOptIn")
-            optIn("kotlinx.coroutines.ExperimentalCoroutinesApi")
-        }
-    }
-
-    sourceSets.matching { it.name.endsWith("Test") }.configureEach {
-        languageSettings.optIn("kotlin.time.ExperimentalTime")
-    }
-
-    // Enable concurrent sweep phase in new native memory manager. (This will be enabled by default in 1.7.0)
-    // https://kotlinlang.org/docs/whatsnew1620.html#concurrent-implementation-for-the-sweep-phase-in-new-memory-manager
-    // (This might not be necessary here since the other module creates the framework, but it's here as well just in case it matters for
-    //  test binaries)
-    targets.withType<org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget> {
-        binaries.all {
-            freeCompilerArgs += "-Xgc=cms"
         }
     }
 }

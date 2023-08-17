@@ -38,9 +38,8 @@ import co.touchlab.droidcon.android.ui.theme.WebLinkText
 import co.touchlab.droidcon.android.viewModel.sessions.SpeakerDetailViewModel
 import co.touchlab.droidcon.composite.Url
 import co.touchlab.droidcon.domain.entity.Profile
-import coil.annotation.ExperimentalCoilApi
-import coil.compose.LocalImageLoader
-import coil.compose.rememberImagePainter
+import com.seiko.imageloader.LocalImageLoader
+import com.seiko.imageloader.rememberImagePainter
 
 @Composable
 fun ProfileDetail(navController: NavHostController, speakerId: Profile.Id) {
@@ -71,7 +70,6 @@ fun ProfileDetail(navController: NavHostController, speakerId: Profile.Id) {
     }
 }
 
-@OptIn(ExperimentalCoilApi::class)
 @Composable
 private fun Header(name: String, tagLine: String, imageUrl: Url?) {
     Row(
@@ -83,11 +81,8 @@ private fun Header(name: String, tagLine: String, imageUrl: Url?) {
     ) {
         val painter = imageUrl?.string?.let {
             rememberImagePainter(
-                data = it,
-                imageLoader = LocalImageLoader.current,
-                builder = {
-                    placeholder(0)
-                }
+                url = it,
+                imageLoader = LocalImageLoader.current
             )
         }
 
