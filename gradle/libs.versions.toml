@@ -27,7 +27,6 @@ ktor = "2.3.3"
 multiplatformSettings = "1.0.0"
 hyperdrive = "0.1.139"
 core = "1.10.1"
-firebaseAnalytics = "21.3.0"
 uuid = "0.7.1"
 imageLoader = "1.6.4"
 korio = "4.0.9"
@@ -71,8 +70,6 @@ hyperdrive-multiplatformx-api = { module = "org.brightify.hyperdrive:multiplatfo
 hyperdrive-multiplatformx-compose = { module = "org.brightify.hyperdrive:multiplatformx-compose", version.ref = "hyperdrive" }
 
 androidx-core = { module = "androidx.core:core-ktx", version.ref = "core" }
-
-firebase-analytics = { module = "com.google.firebase:firebase-analytics-ktx", version.ref = "firebaseAnalytics" }
 
 uuid = { module = "com.benasher44:uuid", version.ref = "uuid" }
 imageLoader = { module = "io.github.qdsfdhvh:image-loader", version.ref = "imageLoader" }

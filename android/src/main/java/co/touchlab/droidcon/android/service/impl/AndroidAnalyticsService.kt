@@ -2,9 +2,8 @@ package co.touchlab.droidcon.android.service.impl
 
 import android.os.Bundle
 import co.touchlab.droidcon.domain.service.AnalyticsService
-import com.google.firebase.analytics.FirebaseAnalytics
 
-class AndroidAnalyticsService(private val firebaseAnalytics: FirebaseAnalytics) : AnalyticsService {
+class AndroidAnalyticsService() : AnalyticsService {
 
     override fun logEvent(name: String, params: Map<String, Any>) {
         val bundle = Bundle()
@@ -22,6 +21,5 @@ class AndroidAnalyticsService(private val firebaseAnalytics: FirebaseAnalytics) 
                 else -> throw IllegalArgumentException("Unsupported type $obj with key $key")
             }
         }
-        firebaseAnalytics.logEvent(name, bundle)
     }
 }

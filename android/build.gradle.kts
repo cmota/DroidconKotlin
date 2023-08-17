@@ -1,8 +1,6 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
-
-    id("com.google.gms.google-services")
 }
 
 android {
@@ -51,7 +49,6 @@ dependencies {
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.koin.compose)
     implementation(libs.kotlinx.datetime)
-    implementation(libs.firebase.analytics)
 
     implementation(libs.hyperdrive.multiplatformx.api)
 
