@@ -41,38 +41,38 @@ import co.touchlab.droidcon.domain.entity.Session
 import co.touchlab.droidcon.domain.entity.Sponsor
 
 sealed class MainTab(val route: String, @StringRes val titleRes: Int, @DrawableRes val image: Int) {
-    object Schedule : MainTab("schedule", R.string.schedule_title, R.drawable.menu_schedule)
-    object MyAgenda : MainTab("myAgenda", R.string.my_agenda_title, R.drawable.menu_my_agenda)
-    object Sponsors : MainTab("sponsors", R.string.sponsors_title, R.drawable.menu_sponsor)
-    object Settings : MainTab("settings", R.string.settings_title, R.drawable.menu_settings)
+    data object Schedule : MainTab("schedule", R.string.schedule_title, R.drawable.menu_schedule)
+    data object MyAgenda : MainTab("myAgenda", R.string.my_agenda_title, R.drawable.menu_my_agenda)
+    data object Sponsors : MainTab("sponsors", R.string.sponsors_title, R.drawable.menu_sponsor)
+    data object Settings : MainTab("settings", R.string.settings_title, R.drawable.menu_settings)
 }
 
 sealed class SettingsScreen(val route: String) {
-    object Main : SettingsScreen("settings/main")
-    object About : SettingsScreen("settings/about")
+    data object Main : SettingsScreen("settings/main")
+    data object About : SettingsScreen("settings/about")
 }
 
 sealed class ScheduleScreen(val route: String) {
-    object Main : ScheduleScreen("schedule/main")
-    object SessionDetail : ScheduleScreen("schedule/sessionDetail-{sessionId}") {
+    data object Main : ScheduleScreen("schedule/main")
+    data object SessionDetail : ScheduleScreen("schedule/sessionDetail-{sessionId}") {
 
         fun createRoute(sessionId: Session.Id) = "schedule/sessionDetail-${sessionId.value}"
     }
 
-    object SpeakerDetail : ScheduleScreen("schedule/speakerDetail-{speakerId}") {
+    data object SpeakerDetail : ScheduleScreen("schedule/speakerDetail-{speakerId}") {
 
         fun createRoute(speakerId: Profile.Id) = "schedule/speakerDetail-${speakerId.value}"
     }
 }
 
 sealed class SponsorsScreen(val route: String) {
-    object Main : SponsorsScreen("sponsors/main")
-    object Detail : SponsorsScreen("sponsors/detail/{sponsorGroup}-{sponsorName}") {
+    data object Main : SponsorsScreen("sponsors/main")
+    data object Detail : SponsorsScreen("sponsors/detail/{sponsorGroup}-{sponsorName}") {
 
         fun createRoute(sponsorId: Sponsor.Id) = "sponsors/detail/${sponsorId.group}-${sponsorId.name}"
     }
 
-    object RepresentativeDetail : ScheduleScreen("sponsors/representativeDetail-{representativeId}") {
+    data object RepresentativeDetail : ScheduleScreen("sponsors/representativeDetail-{representativeId}") {
 
         fun createRoute(representativeId: Profile.Id) = "sponsors/representativeDetail-${representativeId.value}"
     }

@@ -78,12 +78,8 @@ fastlane/Preview.html
 fastlane/screenshots
 fastlane/test_output
 
-#Because ugh
-.DS_Store
-
 buildboth.sh
 google-services.json
-GoogleService-Info.plist
 GoogleService-Info.plist
 Pods/
 *.xcworkspace

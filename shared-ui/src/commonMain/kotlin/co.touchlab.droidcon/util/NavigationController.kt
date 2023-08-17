@@ -273,7 +273,7 @@ internal fun NavigationStack(key: Any?, links: NavigationStackScope.() -> Unit, 
                 slideInHorizontally(initialOffsetX = { -it }) togetherWith slideOutHorizontally(targetOffsetX = { it })
             }
         },
-        contentAlignment = Alignment.BottomCenter, label = ""
+        contentAlignment = Alignment.BottomCenter, label = "Navigation"
     ) { activeComposables ->
         SubcomposeLayout(
             measurePolicy = { constraints ->

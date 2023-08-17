@@ -9,7 +9,7 @@ android {
     defaultConfig {
         applicationId = "co.touchlab.droidcon"
         minSdk = libs.versions.androidMinSdk.get().toInt()
-        targetSdk = 34
+        targetSdk = libs.versions.androidTargetSdk.get().toInt()
         versionCode = 20100
         versionName = "2.1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -47,18 +47,22 @@ dependencies {
     implementation(project(":shared-ui"))
 
     implementation(libs.androidx.core.splashscreen)
-    implementation(libs.koin.compose)
-    implementation(libs.kotlinx.datetime)
-
-    implementation(libs.hyperdrive.multiplatformx.api)
-
-    implementation(libs.imageLoader)
-
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.compose.material)
     implementation(libs.androidx.compose.activity)
     implementation(libs.androidx.compose.navigation)
+
+    implementation(libs.koin.compose)
+
+    implementation(libs.kotlinx.datetime)
+
+    implementation(libs.image.loader)
+
+    implementation(libs.kermit)
+    implementation(libs.hyperdrive.multiplatformx.api)
+
+    implementation(libs.settings.multiplatform)
 
     coreLibraryDesugaring(libs.android.desugar)
 }

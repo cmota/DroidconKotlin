@@ -45,35 +45,29 @@ kotlin {
     androidTarget()
 
     sourceSets {
-        val commonMain by getting {
+        commonMain {
             dependencies {
                 implementation(project(":shared"))
-
-                api(libs.kermit)
-                api(libs.kotlinx.coroutines.core)
-                api(libs.kotlinx.datetime)
-                api(libs.multiplatformSettings.core)
-                api(libs.atomicFu)
-                api(libs.uuid)
 
                 implementation(libs.ktor.client.core)
                 implementation(libs.ktor.client.json)
                 implementation(libs.ktor.client.logging)
                 implementation(libs.ktor.client.serialization)
 
-                implementation(libs.sqldelight.runtime)
-                implementation(libs.sqldelight.coroutines)
-
-                implementation(libs.stately.common)
-                implementation(libs.koin.core)
-
                 implementation(compose.foundation)
                 implementation(compose.runtime)
                 implementation(compose.material)
                 implementation(compose.ui)
 
-                implementation(libs.imageLoader)
+                implementation(libs.kotlinx.datetime)
 
+                implementation(libs.koin.core)
+
+                implementation(libs.image.loader)
+
+                implementation(libs.uuid)
+
+                implementation(libs.kermit)
                 implementation(libs.hyperdrive.multiplatformx.api)
             }
         }

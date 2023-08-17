@@ -45,13 +45,13 @@ kotlin {
     androidTarget()
 
     sourceSets {
-        val commonMain by getting {
+        commonMain {
             dependencies {
-                api(libs.kermit)
-                api(libs.kotlinx.coroutines.core)
-                api(libs.kotlinx.datetime)
-                api(libs.multiplatformSettings.core)
-                api(libs.uuid)
+                implementation(libs.kermit)
+                implementation(libs.kotlinx.coroutines.core)
+                implementation(libs.kotlinx.datetime)
+                implementation(libs.settings.multiplatform)
+                implementation(libs.uuid)
 
                 implementation(libs.ktor.client.core)
                 implementation(libs.ktor.client.json)
@@ -66,7 +66,8 @@ kotlin {
                 implementation(libs.korio)
             }
         }
-        val androidMain by getting {
+
+        androidTarget {
             dependencies {
                 implementation(libs.sqldelight.driver.android)
                 implementation(libs.kotlinx.coroutines.android)

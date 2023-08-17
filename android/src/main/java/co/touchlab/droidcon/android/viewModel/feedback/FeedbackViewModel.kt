@@ -81,8 +81,8 @@ class FeedbackViewModel(
         }
 
     sealed class Reaction(@StringRes val descriptionRes: Int, @DrawableRes val imageRes: Int) {
-        object Bad : Reaction(R.string.feedback_reaction_bad_description, R.drawable.baseline_sentiment_very_dissatisfied_24)
-        object Normal : Reaction(R.string.feedback_reaction_normal_description, R.drawable.baseline_sentiment_satisfied_24)
-        object Good : Reaction(R.string.feedback_reaction_good_description, R.drawable.baseline_sentiment_satisfied_alt_24)
+        data object Bad : Reaction(R.string.feedback_reaction_bad_description, R.drawable.baseline_sentiment_very_dissatisfied_24)
+        data object Normal : Reaction(R.string.feedback_reaction_normal_description, R.drawable.baseline_sentiment_satisfied_24)
+        data object Good : Reaction(R.string.feedback_reaction_good_description, R.drawable.baseline_sentiment_satisfied_alt_24)
     }
 }

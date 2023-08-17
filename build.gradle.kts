@@ -3,8 +3,7 @@
 plugins {
     alias(libs.plugins.androidApplication) apply false
     alias(libs.plugins.kotlinAndroid) apply false
-
-    id("com.squareup.sqldelight") version (libs.versions.sqldelight.get()) apply false
+    alias(libs.plugins.sqldelight) apply false
 }
 
 allprojects {

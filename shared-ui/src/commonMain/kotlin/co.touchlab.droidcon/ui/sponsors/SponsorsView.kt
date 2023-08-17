@@ -69,7 +69,9 @@ internal fun SponsorsView(viewModel: SponsorListViewModel) {
             val uriHandler = LocalUriHandler.current
 
             val sponsorGroups by viewModel.observeSponsorGroups.observeAsState()
-            Column {
+            Column(
+                modifier = Modifier.padding(it)
+            ) {
                 if (sponsorGroups.isEmpty()) {
                     EmptyView()
                 } else {

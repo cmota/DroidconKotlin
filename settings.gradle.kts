@@ -14,7 +14,6 @@ pluginManagement {
         kotlin("plugin.serialization") version kotlinVersion
         kotlin("native.cocoapods") version kotlinVersion
         id("com.squareup.sqldelight") version sqldelightVersion
-        id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
     }
 }
 

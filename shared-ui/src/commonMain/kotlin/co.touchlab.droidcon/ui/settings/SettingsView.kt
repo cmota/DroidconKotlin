@@ -44,7 +44,12 @@ internal fun SettingsView(viewModel: SettingsViewModel) {
         },
     ) {
         val scrollState = rememberScrollState()
-        Column(modifier = Modifier.fillMaxHeight().verticalScroll(scrollState)) {
+        Column(
+            modifier = Modifier
+                .fillMaxHeight()
+                .padding(it)
+                .verticalScroll(scrollState)
+        ) {
             IconTextSwitchRow(
                 text = "Enable feedback",
                 image = Icons.Default.MailOutline,

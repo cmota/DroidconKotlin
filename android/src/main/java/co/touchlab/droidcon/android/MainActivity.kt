@@ -72,7 +72,7 @@ class MainActivity : ComponentActivity(), KoinComponent {
             }
 
             val showSplashScreen by applicationViewModel.showSplashScreen.collectAsState()
-            Crossfade(targetState = showSplashScreen) { shouldShowSplashScreen ->
+            Crossfade(targetState = showSplashScreen, label = "SplashScreen") { shouldShowSplashScreen ->
                 if (shouldShowSplashScreen) {
                     LaunchedEffect(applicationViewModel) {
                         delay(1_000)
