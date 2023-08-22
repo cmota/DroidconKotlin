@@ -1,6 +1,7 @@
 package co.touchlab.droidcon.domain.repository.impl
 
 import co.touchlab.droidcon.db.SessionQueries
+import co.touchlab.droidcon.domain.entity.Profile
 import co.touchlab.droidcon.domain.entity.Room
 import co.touchlab.droidcon.domain.entity.Session
 import co.touchlab.droidcon.domain.repository.SessionRepository
@@ -29,6 +30,10 @@ class SqlDelightSessionRepository(
 
     override fun observeAllAttending(): Flow<List<Session>> {
         return sessionQueries.attendingSessions(::sessionFactory).asFlow().mapToList()
+    }
+
+    override fun observerSessionsFromSpeaker(id: Profile.Id): Flow<List<Session>> {
+        return sessionQueries.userSessions(id.value, ::sessionFactory).asFlow().mapToList()
     }
 
     override suspend fun allAttending(): List<Session> {

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Droidcon</string>
+
+    <string name="navigation_more">Droidcon SF 2023</string>
+    <string name="navigation_schedule">Schedule</string>
+    <string name="navigation_speakers">Speakers</string>
+    <string name="navigation_sessions">Sessions</string>
+    <string name="navigation_sponsors">Sponsors</string>
+    <string name="navigation_search">Search</string>
+    <string name="navigation_bookmarks">Bookmarks</string>
+
+    <string name="auto_permission_title">Grant permission</string>
+    <string name="auto_permission_message">You need to grant the location permission to navigate to nearby conferences</string>
+    <string name="auto_permission_granted">Location permission granted</string>
+    <string name="auto_permission_not_granted">You need to grant the location permission</string>
+
+    <string name="auto_navigate_to_failed">Unable to open navigation app</string>
+
+    <string name="auto_placeholder">-</string>
+    <string name="auto_navigate_to">Navigate to…</string>
+    <string name="auto_session_text">Room %s at %s</string>
+    <string name="auto_session_bookmark">Bookmark</string>
+    <string name="auto_session_remove_bookmark">Remove bookmark</string>
+    <string name="auto_session_bookmark_success">Added to bookmarks</string>
+    <string name="auto_session_remove_bookmark_success">Removed from bookmarks</string>
+    <string name="auto_speakers_sessions">Session</string>
+    <string name="auto_speakers_biography">Biography</string>
+    <string name="auto_speakers_biography_more">More about %s</string>
+    <string name="auto_no_information">No data available</string>
+</resources>

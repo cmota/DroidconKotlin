@@ -45,6 +45,7 @@ android {
 dependencies {
     implementation(project(":shared"))
     implementation(project(":shared-ui"))
+    implementation(project(":common:car"))
 
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.androidx.compose.ui)

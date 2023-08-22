@@ -1,11 +1,14 @@
 package co.touchlab.droidcon.domain.repository
 
+import co.touchlab.droidcon.domain.entity.Profile
 import co.touchlab.droidcon.domain.entity.Session
 import kotlinx.coroutines.flow.Flow
 
 interface SessionRepository : Repository<Session.Id, Session> {
 
     fun observeAllAttending(): Flow<List<Session>>
+
+    fun observerSessionsFromSpeaker(id: Profile.Id): Flow<List<Session>>
 
     suspend fun allAttending(): List<Session>
 

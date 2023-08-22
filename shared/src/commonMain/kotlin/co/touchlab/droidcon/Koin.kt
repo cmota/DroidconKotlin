@@ -13,8 +13,10 @@ import co.touchlab.droidcon.application.service.impl.DefaultNotificationScheduli
 import co.touchlab.droidcon.db.DroidconDatabase
 import co.touchlab.droidcon.db.SessionTable
 import co.touchlab.droidcon.domain.gateway.SessionGateway
+import co.touchlab.droidcon.domain.gateway.SpeakerGateway
 import co.touchlab.droidcon.domain.gateway.SponsorGateway
 import co.touchlab.droidcon.domain.gateway.impl.DefaultSessionGateway
+import co.touchlab.droidcon.domain.gateway.impl.DefaultSpeakerGateway
 import co.touchlab.droidcon.domain.gateway.impl.DefaultSponsorGateway
 import co.touchlab.droidcon.domain.repository.ProfileRepository
 import co.touchlab.droidcon.domain.repository.RoomRepository
@@ -154,6 +156,11 @@ private val coreModule = module {
             roomRepository = get(),
             profileRepository = get(),
             scheduleService = get(),
+        )
+    }
+    single<SpeakerGateway> {
+        DefaultSpeakerGateway(
+            profileRepository = get()
         )
     }
     single<ScheduleService> {

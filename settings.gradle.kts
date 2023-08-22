@@ -17,6 +17,6 @@ pluginManagement {
     }
 }
 
-include(":shared", ":shared-ui", ":android")
+include(":shared", ":shared-ui", ":android", ":common:car", ":automotiveApp")
 
 rootProject.name = "Droidcon"

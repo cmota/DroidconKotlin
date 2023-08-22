@@ -2,6 +2,7 @@ package co.touchlab.droidcon.domain.repository.impl
 
 import co.touchlab.droidcon.composite.Url
 import co.touchlab.droidcon.db.ProfileQueries
+import co.touchlab.droidcon.db.SessionQueries
 import co.touchlab.droidcon.db.SessionSpeakerQueries
 import co.touchlab.droidcon.db.SponsorRepresentativeQueries
 import co.touchlab.droidcon.domain.entity.Profile
@@ -13,6 +14,7 @@ import com.squareup.sqldelight.runtime.coroutines.mapToList
 import com.squareup.sqldelight.runtime.coroutines.mapToOne
 import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 class SqlDelightProfileRepository(
     private val profileQueries: ProfileQueries,

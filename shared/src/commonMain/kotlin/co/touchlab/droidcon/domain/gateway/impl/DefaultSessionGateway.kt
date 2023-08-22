@@ -1,6 +1,7 @@
 package co.touchlab.droidcon.domain.gateway.impl
 
 import co.touchlab.droidcon.domain.composite.ScheduleItem
+import co.touchlab.droidcon.domain.entity.Profile
 import co.touchlab.droidcon.domain.entity.Session
 import co.touchlab.droidcon.domain.gateway.SessionGateway
 import co.touchlab.droidcon.domain.repository.ProfileRepository
@@ -37,6 +38,10 @@ class DefaultSessionGateway(
         return sessionRepository.observe(id).map { session ->
             scheduleItemForSession(session)
         }
+    }
+
+    override fun observeAllSessionsFromSpeaker(id: Profile.Id): Flow<List<Session>> {
+        return sessionRepository.observerSessionsFromSpeaker(id)
     }
 
     private suspend fun scheduleItemForSession(session: Session): ScheduleItem =

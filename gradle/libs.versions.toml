@@ -2,7 +2,8 @@
 agp = "8.1.0"
 
 kotlin = "1.9.0"
-androidMinSdk = "21"
+androidMinSdk = "24"
+androidMinSdkAutomotive = "29"
 androidTargetSdk = "34"
 androidCompileSdk = "UpsideDownCake"
 
@@ -25,10 +26,14 @@ core = "1.10.1"
 uuid = "0.7.1"
 imageLoader = "1.6.4"
 korio = "4.0.9"
+carApp = "1.4.0-alpha01"
+carAppAutomotive = "1.2.0"
 
 [libraries]
 android-desugar = { module = "com.android.tools:desugar_jdk_libs", version = "2.0.3" }
 
+androidx-car-app = { module = "androidx.car.app:app", version.ref = "carApp" }
+androidx-car-app-automotive = { module = "androidx.car.app:app-automotive", version.ref = "carAppAutomotive" }
 androidx-core = { module = "androidx.core:core-ktx", version.ref = "core" }
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "splashcreen" }
 
